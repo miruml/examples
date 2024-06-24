@@ -1,3 +1,3 @@
 # Testing GitHub Deployments
 
-Testing the push so please work
+Consistency is the key
