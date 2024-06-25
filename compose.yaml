@@ -4,8 +4,6 @@ services:
     build:
       context: frontend
       target: development
-    volumes:
-      - wp_data:/var/www/html
     ports:
       - 80:80
     restart: always
