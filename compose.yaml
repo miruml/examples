@@ -6,6 +6,8 @@ services:
       target: development
     ports:
       - 80:80
+    volumes:
+      - db_data:/var/lib/mysql
     restart: always
     environment:
       - WORDPRESS_DB_HOST=db
@@ -17,9 +19,9 @@ services:
     image: mariadb:10.6.4-focal
     # If you really want to use MySQL, uncomment the following line
     #image: mysql:8.0.27
-    command: '--default-authentication-plugin=mysql_native_password'
     volumes:
-      - db_data:/var/lib/mysql
+      - wp_data:/var/www/html
+    command: '--default-authentication-plugin=mysql_native_password'
     restart: always
     environment:
       - MYSQL_ROOT_PASSWORD=somewordpress
@@ -29,3 +31,6 @@ services:
     expose:
       - 3306
       - 33060
+volumes:
+  db_data:
+  wp_data:
