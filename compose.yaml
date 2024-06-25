@@ -29,7 +29,3 @@ services:
     expose:
       - 3306
       - 33060
-volumes:
-  db_data:
-  wp_data:volumes:
-  mongo_data:
