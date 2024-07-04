@@ -1,36 +1,48 @@
-name: example
+name: todo
 services:
-  wordpress:
+  frontend:
     build:
       context: frontend
       target: development
     ports:
-      - 80:80
+      - 3000:3000
+    stdin_open: true
     volumes:
-      - db_data:/var/lib/mysql
+      - ./frontend:/usr/src/app
+      - /usr/src/app/node_modules
     restart: always
-    environment:
-      - WORDPRESS_DB_HOST=db
-      - WORDPRESS_DB_USER=wordpress
-      - WORDPRESS_DB_PASSWORD=wordpress
-      - WORDPRESS_DB_NAME=wordpress
-  db:
-    # We use a mariadb image which supports both amd64 & arm64 architecture
-    image: mariadb:10.6.4-focal
-    # If you really want to use MySQL, uncomment the following line
-    #image: mysql:8.0.27
+    networks:
+      - react-express
+    depends_on:
+      - backend
+
+  backend:
+    restart: always
+    build:
+      context: backend
+      target: development
     volumes:
-      - wp_data:/var/www/html
-    command: '--default-authentication-plugin=mysql_native_password'
+      - ./backend:/usr/src/app
+      - /usr/src/app/node_modules
+    depends_on:
+      - mongo
+    networks:
+      - express-mongo
+      - react-express
+    expose: 
+      - 3000
+  mongo:
     restart: always
-    environment:
-      - MYSQL_ROOT_PASSWORD=somewordpress
-      - MYSQL_DATABASE=wordpress
-      - MYSQL_USER=wordpress
-      - MYSQL_PASSWORD=wordpress
+    image: mongo:4.2.0
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - express-mongo
     expose:
-      - 3306
-      - 33060
+      - 27017
+networks:
+  react-express:
+  express-mongo:
+
 volumes:
-  db_data:
-  wp_data:
+  mongo_data:
