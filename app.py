@@ -13,7 +13,7 @@ def main():
         print("Hello Barboards!")
 
         # check if cuda is available
-        print("Is cuda available?:", end="")
+        print("Is cuda available? :", end="")
         if torch.cuda.is_available():
             print("Yes")
         else:
