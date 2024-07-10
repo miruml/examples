@@ -1,8 +1,9 @@
-FROM nvcr.io/nvidia/l4t-pytorch:r35.2.1-pth2.0-py3 
+FROM python:3.11
 
 WORKDIR /app
 
+RUN pip install pytz torch
+
 COPY app.py .
 
-# Command to run the demo.py script
-CMD ["python3", "demo.py"]
+CMD ["python3", "-u", "app.py"]
