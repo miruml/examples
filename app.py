@@ -10,7 +10,7 @@ import torch
 def main():
 
     while True:
-        print("Hello Zenus, we want to build something you love")
+        print("Hello Barboards, we want to build something you love")
 
         # check if cuda is available
         print("Is cuda available? :", end="")
